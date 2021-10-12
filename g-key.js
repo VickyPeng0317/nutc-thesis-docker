@@ -1,24 +1,27 @@
-const crypto = require('crypto');
+import * as crypto from 'crypto'
 
 let message = JSON.stringify({ 'text': 123 });
 RSA(message);
 
 async function RSA(message) {
+  // 生成 A Key pair
   const keyPairA = await generateKeyPair();
   console.log('公鑰A：',　keyPairA.publicKey);
   console.log('私鑰A：',　keyPairA.privateKey);
+  // 生成 B Key pair
   const keyPairB = await generateKeyPair();
   console.log('公鑰B：',　keyPairB.publicKey);
   console.log('私鑰B：',　keyPairB.privateKey);
-  // B -> A
+  // B -> A 加密 & 簽章
   const encryptData = encrypt(message, keyPairA.publicKey);
   console.log('加密結果：', encryptData.toString('base64'));
-  let signData = sign(encryptData, keyPairB.privateKey);
+  const signData = sign(encryptData, keyPairB.privateKey);
   console.log('簽章結果：', signData.toString('base64'));
   try {
+    // B -> A 驗證 & 解密
     const authSignData = authSign(signData, keyPairB.publicKey);
     console.log('簽章驗證：', authSignData.toString('base64'));
-    let decryptedData = decrypt(authSignData, keyPairA.privateKey);
+    const decryptedData = decrypt(authSignData, keyPairA.privateKey);
     console.log('解密結果：', JSON.parse(decryptedData.toString()));
   } catch (error) {
     console.log('解密失敗', error);
