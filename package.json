@@ -2,9 +2,11 @@
   "name": "nutc-thesis-docker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --ignore peng/ main.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,12 @@
   },
   "homepage": "https://github.com/cyut10430004/nutc-thesis-docker#readme",
   "dependencies": {
+    "glob": "^7.1.7",
+    "moment": "^2.29.1",
+    "rxjs": "^7.1.0",
     "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
